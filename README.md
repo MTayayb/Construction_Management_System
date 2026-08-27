@@ -66,7 +66,7 @@ CMS/
    MONGO_URI=your_mongodb_connection_string
    JWT_SECRET=your_jwt_secret
    ```
-   ⚠️ **Never commit `.env` to git.** It's already excluded via `.gitignore` — double check it's not showing up in `git status` before you push.
+  
 
 5. **Run the Application:**
    ```bash
