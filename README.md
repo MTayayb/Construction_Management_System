@@ -2,7 +2,7 @@
 
 A comprehensive web-based platform designed to streamline construction project management, including project tracking, workforce management, material procurement, and financial monitoring.
 
-🔗 **Live Demo:** https://construction-management-system-xxxx.onrender.com
+🔗 **Live Demo:** https://construction-management-system-7cw3.onrender.com
 *(replace with your actual Render URL — note: free tier spins down after inactivity, so the first load may take 30–60 seconds)*
 
 ## 🚀 Tech Stack
