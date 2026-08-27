@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Dashboard - CMS</title>
+
+  <!-- Main Styles -->
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Dashboard JS -->
+  <script defer src="../js/ui.js"></script>
+  <script defer src="../js/notifications.js"></script>
+  <script defer src="client.js"></script>
+  <script defer src="../js/client-fluid.js"></script>
+</head>
+
+<body class="client-dashboard">
+  <div class="dashboard-container">
+    <div class="bg-animation-layer waves-container">
+      <canvas id="client-fluid"></canvas>
+    </div>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <i class="fas fa-briefcase"></i>
+        <span>CMS Client</span>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-item active" data-target="new-project-section">
+          <i class="fas fa-plus-circle"></i>
+          <span>New Project</span>
+        </div>
+        <div class="nav-item" data-target="projects-section">
+          <i class="fas fa-folder-open"></i>
+          <span>My Projects</span>
+        </div>
+        <div class="nav-item" data-target="analytics-section">
+          <i class="fas fa-chart-line"></i>
+          <span>Analytics</span>
+        </div>
+        <div class="nav-item" data-target="change-request-section">
+          <i class="fas fa-pen-square"></i>
+          <span>Change Request</span>
+        </div>
+        <div class="nav-item" data-target="progress-reports-section">
+          <i class="fas fa-chart-line"></i>
+          <span>Progress Reports</span>
+        </div>
+        <div class="nav-item" data-target="history-section">
+          <i class="fas fa-history"></i>
+          <span>History</span>
+        </div>
+        <button id="logoutBtn" class="nav-item logout-btn-sidebar" style="margin-top:auto;justify-content:flex-start;">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </button>
+      </nav>
+    </aside>
+
+    <!-- CONTENT AREA -->
+    <main class="main-content">
+      <header class="content-header">
+        <h1 id="page-title">Submit New Project</h1>
+        <div class="notification-bell" id="notificationBell">
+          <i class="fas fa-bell"></i>
+          <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
+          <div class="notification-panel" id="notificationPanel">
+            <div class="notification-header">
+              <h3>Notifications</h3>
+              <button class="mark-all-read" id="markAllRead">Mark all as read</button>
+            </div>
+            <div class="notification-list" id="notificationList">
+              <!-- Notifications will be loaded here -->
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Submit New Project -->
+      <section id="new-project-section" class="active full-width-section">
+        <h2>Submit New Project</h2>
+        <form id="new-project-form" enctype="multipart/form-data">
+          <label for="project-name">Project Name</label>
+          <input type="text" id="project-name" required />
+
+          <label for="project-description">Description</label>
+          <textarea id="project-description" required></textarea>
+
+          <label for="project-model">3D Model (.glb/.gltf)</label>
+          <input type="file" id="project-model" accept=".glb,.gltf" />
+
+          <button type="submit">Submit Project</button>
+        </form>
+        <p id="new-project-message" class="message"></p>
+      </section>
+
+      <!-- Client Projects -->
+      <section id="projects-section">
+        <h2>My Projects</h2>
+        <div id="projects-list" class="projects-grid"></div>
+      </section>
+
+      <!-- Change Requests -->
+      <section id="change-request-section" class="full-width-section">
+        <h2>Submit Change Request</h2>
+        <form id="change-request-form">
+          <label for="project-select">Select Project</label>
+          <select id="project-select" required></select>
+
+          <label for="change-description">Change Description</label>
+          <textarea id="change-description" required></textarea>
+
+          <button type="submit">Submit Change Request</button>
+        </form>
+        <p id="change-request-message" class="message"></p>
+
+        <h3 style="margin-top: 2rem;">Request History</h3>
+        <div id="change-requests-list" class="projects-grid"></div>
+      </section>
+
+      <!-- Progress Reports -->
+      <section id="progress-reports-section">
+        <h2>Progress Reports</h2>
+        <div id="progress-reports-list" class="projects-grid"></div>
+      </section>
+
+      <!-- Analytics Section -->
+      <section id="analytics-section">
+        <h2>Project Analytics</h2>
+
+        <div class="analytics-grid">
+          <div class="stat-card">
+            <i class="fas fa-project-diagram"></i>
+            <div class="stat-content">
+              <h3 id="client-total-projects">0</h3>
+              <p>Total Projects</p>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <i class="fas fa-boxes"></i>
+            <div class="stat-content">
+              <h3 id="client-material-in">0</h3>
+              <p>Material Used</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <i class="fas fa-file-alt"></i>
+            <div class="stat-content">
+              <h3 id="client-reports">0</h3>
+              <p>Progress Reports</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- History Section -->
+      <section id="history-section" class="full-width-section" style="position: relative;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+          <h2>History (Deleted Items)</h2>
+          <button id="clearClientHistoryBtn" class="clear-history-btn"
+            style="background: #e53e3e; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer;">
+            Clear My History
+          </button>
+        </div>
+
+        <h3 style="margin-top: 1rem; color: #4a5568;">Deleted Projects</h3>
+        <div id="history-projects-list" class="projects-grid"></div>
+
+        <h3 style="margin-top: 2rem; color: #4a5568;">Deleted Reports</h3>
+        <div id="history-reports-list" class="projects-grid"></div>
+
+        <h3 style="margin-top: 2rem; color: #4a5568;">Deleted Change Requests</h3>
+        <div id="history-requests-list" class="projects-grid"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Project Detail Modal -->
+  <div id="detailModal" class="notification-modal">
+    <div class="modal-content-notif">
+      <span class="modal-close-notif" id="closeDetailModal">&times;</span>
+      <h2 id="modalDetailTitle">Project Details</h2>
+      <div id="modalDetailBody"></div>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Worker Dashboard - CMS</title>
+
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script defer src="../js/ui.js"></script>
+  <script defer src="../js/notifications.js"></script>
+  <script defer src="worker.js"></script>
+  <script defer src="../js/worker-energy.js"></script>
+</head>
+
+<body class="worker-dashboard">
+  <div class="dashboard-container">
+    <div class="bg-animation-layer industrial-animation">
+      <canvas id="worker-energy"></canvas>
+    </div>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <i class="fas fa-hammer"></i>
+        <span>CMS Worker</span>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-item active" data-target="attendance-section">
+          <i class="fas fa-clock"></i>
+          <span>Attendance</span>
+        </div>
+        <div class="nav-item" data-target="total-attendance-section">
+          <i class="fas fa-list-alt"></i>
+          <span>Total Attendance Record</span>
+        </div>
+        <div class="nav-item" data-target="salary-section">
+          <i class="fas fa-wallet"></i>
+          <span>My Salary</span>
+        </div>
+        <div class="nav-item" data-target="history-section">
+          <i class="fas fa-history"></i>
+          <span>History</span>
+        </div>
+        <button id="logoutBtn" class="nav-item logout-btn-sidebar" style="margin-top:auto;justify-content:flex-start;">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </button>
+      </nav>
+    </aside>
+
+    <!-- CONTENT AREA -->
+    <main class="main-content">
+      <header class="content-header">
+        <h1 id="page-title">Attendance</h1>
+        <div class="notification-bell" id="notificationBell">
+          <i class="fas fa-bell"></i>
+          <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
+          <div class="notification-panel" id="notificationPanel">
+            <div class="notification-header">
+              <h3>Notifications</h3>
+              <button class="mark-all-read" id="markAllRead">Mark all as read</button>
+            </div>
+            <div class="notification-list" id="notificationList">
+              <!-- Notifications will be loaded here -->
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Attendance Section -->
+      <section id="attendance-section" class="active full-width-section">
+        <h2>Attendance</h2>
+
+        <form id="attendance-form">
+          <label for="project-select">Select Project</label>
+          <select id="project-select" required></select>
+
+          <label for="status-select">Status</label>
+          <select id="status-select" required>
+            <option value="in">Clock In</option>
+            <option value="out">Clock Out</option>
+          </select>
+
+          <button type="submit">Submit Attendance</button>
+        </form>
+        <p id="attendance-message" class="message"></p>
+
+        <h3>My Attendance Records</h3>
+        <ul id="attendance-list"></ul>
+      </section>
+
+      <!-- Salary Section -->
+      <section id="salary-section" class="full-width-section">
+        <h2>My Salary</h2>
+        <div class="analytics-grid">
+          <div class="stat-card">
+            <i class="fas fa-business-time"></i>
+            <div class="stat-content">
+              <h3 id="total-hours">0</h3>
+              <p>Total Hours Worked</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <i class="fas fa-money-bill-wave"></i>
+            <div class="stat-content">
+              <h3 id="total-salary">₹0</h3>
+              <p>Current Payout</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Total Attendance Record Section -->
+      <section id="total-attendance-section" class="full-width-section">
+        <h2>Total Attendance Record</h2>
+        <div id="total-attendance-list" class="projects-grid">
+          <!-- All attendance records will be loaded here -->
+        </div>
+      </section>
+
+      <!-- History Section -->
+      <section id="history-section" class="full-width-section">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+          <h2>History (Deleted Logs)</h2>
+          <button id="clearWorkerHistoryBtn" class="clear-history-btn"
+            style="background: #e53e3e; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer;">
+            Clear My History
+          </button>
+        </div>
+        <div id="history-attendance-list" class="projects-grid">
+          <!-- Deleted attendance records will be loaded here -->
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Detail Modal -->
+  <div id="detailModal" class="notification-modal">
+    <div class="modal-content-notif">
+      <span class="modal-close-notif" id="closeDetailModal">&times;</span>
+      <h2 id="modalDetailTitle">Details</h2>
+      <div id="modalDetailBody"></div>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Engineer Dashboard - CMS</title>
+
+  <!-- Main Styles -->
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Engineer JS -->
+  <script defer src="../js/ui.js"></script>
+  <script defer src="../js/notifications.js"></script>
+  <script defer src="engineer.js"></script>
+  <script defer src="../js/engineer-precision-light.js"></script>
+</head>
+
+<body class="engineer-dashboard">
+  <div class="dashboard-container">
+    <div class="bg-animation-layer grid-animation">
+      <canvas id="engineer-precision-light"></canvas>
+    </div>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <i class="fas fa-hard-hat"></i>
+        <span>CMS Engineer</span>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-item active" data-target="projects-section">
+          <i class="fas fa-project-diagram"></i>
+          <span>Assigned Projects</span>
+        </div>
+        <div class="nav-item" data-target="task-progress-section">
+          <i class="fas fa-tasks"></i>
+          <span>Task Progress</span>
+        </div>
+        <div class="nav-item" data-target="report-section">
+          <i class="fas fa-file-signature"></i>
+          <span>Site Report</span>
+        </div>
+        <div class="nav-item" data-target="material-section">
+          <i class="fas fa-box-open"></i>
+          <span>Material IN/OUT</span>
+        </div>
+        <div class="nav-item" data-target="my-reports-section">
+          <i class="fas fa-clipboard-list"></i>
+          <span>My Reports</span>
+        </div>
+        <div class="nav-item" data-target="attendance-view-section">
+          <i class="fas fa-user-clock"></i>
+          <span>Attendance</span>
+        </div>
+        <div class="nav-item" data-target="history-section">
+          <i class="fas fa-history"></i>
+          <span>History</span>
+        </div>
+        <button id="logoutBtn" class="nav-item logout-btn-sidebar" style="margin-top:auto;justify-content:flex-start;">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </button>
+      </nav>
+    </aside>
+
+    <!-- CONTENT AREA -->
+    <main class="main-content">
+      <header class="content-header">
+        <h1 id="page-title">Assigned Projects</h1>
+        <div class="notification-bell" id="notificationBell">
+          <i class="fas fa-bell"></i>
+          <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
+          <div class="notification-panel" id="notificationPanel">
+            <div class="notification-header">
+              <h3>Notifications</h3>
+              <button class="mark-all-read" id="markAllRead">Mark all as read</button>
+            </div>
+            <div class="notification-list" id="notificationList">
+              <!-- Notifications will be loaded here -->
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Assigned Projects -->
+      <section id="projects-section" class="active">
+        <h2>Assigned Projects</h2>
+        <div id="projects-list" class="projects-grid"></div>
+      </section>
+
+      <!-- Update Task Progress -->
+      <section id="task-progress-section" class="full-width-section">
+        <h2>Update Task Progress</h2>
+        <form id="update-task-form">
+          <label for="project-select">Select Project</label>
+          <select id="project-select" required></select>
+
+          <label for="progress-input">Progress Details</label>
+          <input type="text" id="progress-input" required placeholder="e.g., 50% foundation done">
+
+          <button type="submit">Update Progress</button>
+        </form>
+        <p id="progress-message" class="message"></p>
+      </section>
+
+      <!-- Submit Site Report -->
+      <section id="report-section" class="full-width-section">
+        <h2>Submit Site Report</h2>
+        <form id="report-form" enctype="multipart/form-data">
+          <label for="report-project-select">Select Project</label>
+          <select id="report-project-select" required></select>
+
+          <label for="report-title">Report Title</label>
+          <input type="text" id="report-title" required>
+
+          <label for="report-description">Description</label>
+          <textarea id="report-description" required></textarea>
+
+          <label for="report-file">Attachment (PDF/Image)</label>
+          <input type="file" id="report-file">
+
+          <button type="submit">Submit Report</button>
+        </form>
+        <p id="report-message" class="message"></p>
+      </section>
+
+      <!-- Material IN/OUT -->
+      <section id="material-section" class="full-width-section">
+        <h2>Material IN/OUT</h2>
+        <form id="material-form">
+          <label for="material-project-select">Select Project</label>
+          <select id="material-project-select" required></select>
+
+          <label for="material-name">Material Name</label>
+          <input type="text" id="material-name" required>
+
+          <label for="material-quantity">Quantity</label>
+          <input type="number" id="material-quantity" required>
+
+          <label for="material-unit">Unit</label>
+          <input type="text" id="material-unit" required>
+
+          <label for="material-type">Type</label>
+          <select id="material-type" required>
+            <option value="in">IN</option>
+            <option value="out">OUT</option>
+          </select>
+
+          <button type="submit">Record Material</button>
+        </form>
+        <p id="material-message" class="message"></p>
+      </section>
+
+      <!-- My Reports Section -->
+      <section id="my-reports-section">
+        <h2>My Submitted Reports</h2>
+        <div id="my-reports-list" class="projects-grid"></div>
+      </section>
+
+      <!-- Attendance View Section -->
+      <section id="attendance-view-section">
+        <h2>Worker Attendance</h2>
+        <div id="attendance-list" class="projects-grid"></div>
+      </section>
+
+      <!-- History Section -->
+      <section id="history-section">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h2>History</h2>
+          <button onclick="clearHistory()" class="logout-btn-sidebar"
+            style="background: #fee2e2 !important; color: #ef4444 !important; border: 1px solid #fecaca; padding: 8px 16px;">
+            <i class="fas fa-trash-sweep"></i> Clear History
+          </button>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <h3>Project History</h3>
+          <div id="history-projects-list" class="projects-grid"></div>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <h3>Report History</h3>
+          <div id="history-reports-list" class="projects-grid"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard - CMS</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script defer src="../js/ui.js"></script>
+  <script defer src="../js/notifications.js"></script>
+  <script defer src="admin.js"></script>
+  <script defer src="../js/admin-particles.js"></script>
+</head>
+
+<body class="admin-dashboard">
+
+  <div class="dashboard-container">
+    <div class="bg-animation-layer">
+      <canvas id="admin-particles"></canvas>
+    </div>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <i class="fas fa-crown"></i>
+        <span>CMS Admin</span>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-item active" data-target="projects-section">
+          <i class="fas fa-folder"></i>
+          <span>Projects</span>
+        </div>
+        <div class="nav-item" data-target="assign-engineer-section">
+          <i class="fas fa-user-plus"></i>
+          <span>Assign Engineer</span>
+        </div>
+        <div class="nav-item" data-target="change-requests-section">
+          <i class="fas fa-clipboard-check"></i>
+          <span>Change Requests</span>
+        </div>
+        <div class="nav-item" data-target="salary-section">
+          <i class="fas fa-money-bill-wave"></i>
+          <span>Worker Salaries</span>
+        </div>
+        <div class="nav-item" data-target="reports-section">
+          <i class="fas fa-file-alt"></i>
+          <span>Site Reports</span>
+        </div>
+        <div class="nav-item" data-target="analytics-section">
+          <i class="fas fa-chart-pie"></i>
+          <span>Analytics</span>
+        </div>
+        <div class="nav-item" data-target="attendance-management-section">
+          <i class="fas fa-user-clock"></i>
+          <span>Attendance</span>
+        </div>
+        <div class="nav-item" data-target="history-section">
+          <i class="fas fa-history"></i>
+          <span>History</span>
+        </div>
+        <button id="logoutBtn" class="nav-item logout-btn-sidebar" style="margin-top:auto;justify-content:flex-start;">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </button>
+      </nav>
+    </aside>
+
+    <!-- CONTENT AREA -->
+    <main class="main-content">
+      <header class="content-header">
+        <h1 id="page-title">Projects</h1>
+        <div class="notification-bell" id="notificationBell">
+          <i class="fas fa-bell"></i>
+          <span class="notification-badge" id="notificationBadge" style="display:none;">0</span>
+        </div>
+      </header>
+
+      <!-- Notification Panel -->
+      <div class="notification-panel" id="notificationPanel">
+        <div class="notification-header">
+          <h3>Notifications</h3>
+          <button class="mark-all-read" id="markAllRead">Mark all as read</button>
+        </div>
+        <div class="notification-list" id="notificationList">
+          <div class="no-notifications">No new notifications</div>
+        </div>
+      </div>
+
+      <!-- Projects Section -->
+      <section id="projects-section" class="active">
+        <div class="section-header">
+          <h2>All Projects</h2>
+        </div>
+        <div id="projects-list" class="projects-grid"></div>
+      </section>
+
+      <!-- Assign Engineer Section -->
+      <section id="assign-engineer-section" class="full-width-section">
+        <h2>Assign Engineer</h2>
+        <form id="assign-engineer-form">
+          <label for="project-select">Select Project</label>
+          <select id="project-select"></select>
+
+          <label for="engineer-select">Select Engineer</label>
+          <select id="engineer-select"></select>
+
+          <button type="submit">Assign Engineer</button>
+        </form>
+        <p id="assign-message" class="message"></p>
+      </section>
+
+      <!-- Pending Change Requests Section -->
+      <section id="change-requests-section">
+        <h2>Pending Change Requests</h2>
+        <div id="change-requests-list" class="projects-grid"></div>
+      </section>
+
+      <!-- Worker Salaries Section -->
+      <section id="salary-section">
+        <h2>Worker Salaries</h2>
+        <div id="salary-list" class="projects-grid"></div>
+      </section>
+
+      <!-- Site Reports Section -->
+      <section id="reports-section">
+        <h2>Site Reports</h2>
+        <div id="reports-list" class="projects-grid"></div>
+      </section>
+
+      <!-- Analytics Section -->
+      <section id="analytics-section">
+        <h2>Analytics & Insights</h2>
+
+        <div class="analytics-grid">
+          <div class="stat-card">
+            <i class="fas fa-project-diagram"></i>
+            <div class="stat-content">
+              <h3 id="total-projects">0</h3>
+              <p>Total Projects</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <i class="fas fa-check-circle"></i>
+            <div class="stat-content">
+              <h3 id="completed-projects">0</h3>
+              <p>Completed (<span id="completion-rate">0</span>%)</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <i class="fas fa-boxes"></i>
+            <div class="stat-content">
+              <h3 id="material-balance">0</h3>
+              <p>Material Balance</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <i class="fas fa-dollar-sign"></i>
+            <div class="stat-content">
+              <h3 id="total-salary">Rs.0</h3>
+              <p>Total Salaries</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <i class="fas fa-file-alt"></i>
+            <div class="stat-content">
+              <h3 id="total-reports">0</h3>
+              <p>Progress Reports</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <h3>Material Usage</h3>
+          <div class="analytics-grid" style="grid-template-columns: repeat(2, 1fr);">
+            <div class="stat-card">
+              <i class="fas fa-arrow-down"></i>
+              <div class="stat-content">
+                <h3 id="material-in">0</h3>
+                <p>Material IN</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-arrow-up"></i>
+              <div class="stat-content">
+                <h3 id="material-out">0</h3>
+                <p>Material OUT</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- History Section -->
+      <section id="history-section">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h2>History</h2>
+          <button onclick="clearHistory()" class="logout-btn-sidebar"
+            style="background: #fee2e2 !important; color: #ef4444 !important; border: 1px solid #fecaca; padding: 8px 16px;">
+            <i class="fas fa-trash-sweep"></i> Clear History
+          </button>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <h3>Projects History</h3>
+          <div id="history-projects-list" class="projects-grid"></div>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <h3>Reports History</h3>
+          <div id="history-reports-list" class="projects-grid"></div>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <h3>Change Requests History</h3>
+          <div id="history-requests-list" class="projects-grid"></div>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <h3>Attendance History</h3>
+          <div id="history-attendance-list" class="projects-grid"></div>
+        </div>
+
+        <div style="margin-top: 2rem;">
+          <h3>Salaries History</h3>
+          <div id="history-salary-list" class="projects-grid"></div>
+        </div>
+      </section>
+
+      <!-- Attendance Management Section -->
+      <section id="attendance-management-section">
+        <h2>Attendance Management</h2>
+        <div id="attendance-records-list" class="projects-grid"></div>
+        <div style="margin-top: 1.5rem; text-align: center;">
+          <button onclick="downloadAttendanceCSV()" style="background: var(--primary); color: white;">
+            <i class="fas fa-download"></i> Download CSV
+          </button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Project Detail Modal -->
+  <div id="detailModal" class="notification-modal">
+    <div class="modal-content-notif">
+      <span class="modal-close-notif" id="closeDetailModal">&times;</span>
+      <h2 id="modalDetailTitle">Project Details</h2>
+      <div id="modalDetailBody"></div>
+    </div>
+  </div>
+
+</body>
+
+</html>
